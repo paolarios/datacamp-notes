@@ -13,3 +13,9 @@ print(areas[-1])
 
 #Print out the area of the living room
 print(areas[5])
+
+#Print out length of var1
+print(len(var1))
+#to now how it works one function in python help(name of the function)
+#Sort full in descending order: full_sorted
+full_sorted=sorted(full, reverse=True)
