@@ -174,3 +174,121 @@ europe ['italy']=data
 
 #Print europe
 print(europe)
+
+# PANDAS
+
+#Pre-defined lists
+names = ['United States', 'Australia', 'Japan', 'India', 'Russia', 'Morocco', 'Egypt']
+dr =  [True, False, False, False, True, True, True]
+cpc = [809, 731, 588, 18, 200, 70, 45]
+
+#Import pandas as pd
+import pandas as pd
+
+#Create dictionary my_dict with three key:value pairs: my_dict
+my_dict = {'country':names, 'drives_right':dr, 'cars_per_cap':cpc}
+
+#Build a DataFrame cars from my_dict: cars
+cars = pd.DataFrame(my_dict)
+
+#Print cars
+print(cars)
+#Definition of row_labels
+row_labels = ['US', 'AUS', 'JAP', 'IN', 'RU', 'MOR', 'EG']
+
+#Specify row labels of cars
+cars.index=row_labels
+#Import the cars.csv data: cars
+cars = pd.read_csv('cars.csv')
+#Fix import by including index_col
+cars = pd.read_csv('cars.csv', index_col=0)
+#Print out drives_right value of Morocco
+print(cars.loc['MOR','drives_right'])
+
+#Print sub-DataFrame
+print(cars.loc[['RU','MOR'],['country','drives_right']])
+#print out drives_right column as Series
+print(cars['drives_right'])
+
+#Print out drives_right column as DataFrame
+print(cars.loc[:,['drives_right']])
+
+#Print out cars_per_cap and drives_right as DataFrame
+print(cars.loc[:, ['cars_per_cap','drives_right']])
+
+
+#Create medium: observations with cars_per_cap between 100 and 500
+cpc=cars['cars_per_cap']
+between=np.logical_and(cpc>100, cpc<500)
+medium=cars[between]
+print(medium)
+
+# areas list
+areas = [11.25, 18.0, 20.0, 10.75, 9.50]
+
+# Change for loop to use enumerate() and update print()
+for index, a in enumerate(areas) :
+    print("room"+str(index)+":"+str(a))
+# Definition of dictionary
+europe = {'spain':'madrid', 'france':'paris', 'germany':'berlin',
+          'norway':'oslo', 'italy':'rome', 'poland':'warsaw', 'austria':'vienna' }
+          
+#Iterate over europe
+for key, value in europe.items():
+    print("the capital of"+key+" is "+str(value))
+    
+# For loop over np_baseball
+for x in np.nditer(np_baseball):
+    print(x)
+#Roll the dice
+dice=np.random.randint(1,7)
+
+# Initialize random_walk
+random_walk=[0]
+
+# Complete the ___
+for x in range(100) :
+    # Set step: last element in random_walk
+    step=random_walk[-1]
+
+    # Roll the dice
+    dice = np.random.randint(1,7)
+
+    # Determine next step
+    if dice <= 2:
+        step = step - 1
+    elif dice <= 5:
+        step = step + 1
+    else:
+        step = step + np.random.randint(1,7)
+
+    # append next_step to random_walk
+    random_walk.append(step)
+
+# Print random_walk
+print(random_walk)
+# Initialization
+random_walk = [0]
+
+for x in range(100) :
+    step = random_walk[-1]
+    dice = np.random.randint(1,7)
+
+    if dice <= 2:
+        step = max(0, step - 1)
+    elif dice <= 5:
+        step = step + 1
+    else:
+        step = step + np.random.randint(1,7)
+
+    random_walk.append(step)
+
+# Import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+
+# Plot random_walk
+plt.plot(random_walk)
+
+
+# Show the plot
+plt.show()
