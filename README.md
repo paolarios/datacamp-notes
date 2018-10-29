@@ -286,9 +286,90 @@ for x in range(100) :
 # Import matplotlib.pyplot as plt
 import matplotlib.pyplot as plt
 
-# Plot random_walk
+#Plot random_walk
 plt.plot(random_walk)
 
 
-# Show the plot
+#Show the plot
+plt.show()
+
+#Import numpy
+import numpy as np
+
+#Create array of DataFrame values: np_vals
+np_vals = df.values
+
+#Create new array of base 10 logarithm values: np_vals_log10
+np_vals_log10=np.log10(np_vals)
+
+#Create array of new DataFrame by passing df to np.log10(): df_log10
+df_log10 = np.log10(df)
+
+#Print original and new data containers
+[print(x, 'has type', type(eval(x))) for x in ['np_vals', 'np_vals_log10', 'df', 'df_log10']]
+
+# Zip the 2 lists together into one list of (key,value) tuples: zipped
+zipped = list(zip(list_keys, list_values))
+
+#Build a dictionary with the zipped list: data
+data = dict(zipped)
+
+#Build and inspect a DataFrame from the dictionary: df
+df = pd.DataFrame(data)
+print(df)
+Build a list of labels: list_labels
+list_labels = ['year', 'artist','song','chart weeks']
+
+Assign the list of labels to the columns attribute: df.columns
+df.columns = list_labels
+# Reading csv files
+df1 = pd.read_csv(filepath_or_buffer='/usr/local/share/datasets/world_population.csv')
+
+#Create a list of the new column labels: new_labels
+new_labels = ['year', 'population']
+
+#Read in the file, specifying the header and names parameters: df2
+df2 = pd.read_csv(filepath_or_buffer='/usr/local/share/datasets/world_population.csv', header=0, names=new_labels)
+
+# Plotting with pandas 
+Create a plot with color='red'
+df.plot(color='red')
+
+#Add a title
+plt.title('Temperature in Austin')
+#Specify the x-axis label
+plt.xlabel('Hours since midnight August 1, 2010')
+#Specify the y-axis label
+plt.ylabel('Temperature (degrees F)')
+#Display the plot
+plt.show()
+
+# Generate a scatter plot
+df.plot(kind='scatter', x='hp', y='mpg', s=sizes)
+
+# Generate the box plots
+df[cols].plot(subplots=True,kind='box')
+# Print the minimum value of the Engineering column
+print(df['Engineering'].min())
+
+# Print the maximum value of the Engineering column
+print(df['Engineering'].max())
+
+# Construct the mean percentage per year: mean
+mean = df.mean(axis='columns')
+
+# Plot the average percentage per year
+mean.plot(x='mean', y='Year')
+# Filter the US population from the origin column: us
+us=df.loc[df['origin']=='US',:]
+
+# This formats the plots such that they appear on separate rows
+fig, axes = plt.subplots(nrows=2, ncols=1)
+
+# Plot the PDF
+df.fraction.plot(ax=axes[0], kind='hist', normed=True, bins=30, range=(0,.3))
+plt.show()
+
+# Plot the CDF
+df.fraction.plot(ax=axes[1], kind='hist', cumulative=True, normed=True, bins=30, range=(0,.3))
 plt.show()
