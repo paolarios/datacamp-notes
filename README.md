@@ -349,27 +349,65 @@ df.plot(kind='scatter', x='hp', y='mpg', s=sizes)
 
 # Generate the box plots
 df[cols].plot(subplots=True,kind='box')
-# Print the minimum value of the Engineering column
+#Print the minimum value of the Engineering column
 print(df['Engineering'].min())
 
-# Print the maximum value of the Engineering column
+#Print the maximum value of the Engineering column
 print(df['Engineering'].max())
 
-# Construct the mean percentage per year: mean
+#Construct the mean percentage per year: mean
 mean = df.mean(axis='columns')
 
-# Plot the average percentage per year
+#Plot the average percentage per year
 mean.plot(x='mean', y='Year')
-# Filter the US population from the origin column: us
+#Filter the US population from the origin column: us
 us=df.loc[df['origin']=='US',:]
 
-# This formats the plots such that they appear on separate rows
+#This formats the plots such that they appear on separate rows
 fig, axes = plt.subplots(nrows=2, ncols=1)
 
-# Plot the PDF
+#Plot the PDF
 df.fraction.plot(ax=axes[0], kind='hist', normed=True, bins=30, range=(0,.3))
 plt.show()
 
-# Plot the CDF
+#Plot the CDF
 df.fraction.plot(ax=axes[1], kind='hist', cumulative=True, normed=True, bins=30, range=(0,.3))
 plt.show()
+
+# Date time series 
+#Prepare a format string: time_format
+time_format = '%Y-%m-%d %H:%M'
+
+#Convert date_list into a datetime object: my_datetimes
+my_datetimes = pd.to_datetime(date_list, format=time_format)  
+
+#Construct a pandas Series using temperature_list and my_datetimes: time_series
+time_series = pd.Series(temperature_list, index=my_datetimes)
+#Extract the hour from 9pm to 10pm on '2010-10-11': ts1
+ts1 = ts0.loc['2010-10-11 21:00:00':'2010-10-11 22:00:00']
+
+#Extract '2010-07-04' from ts0: ts2
+ts2 = ts0.loc['2010-07-04']
+
+#Extract data from '2010-12-15' to '2010-12-31': ts3
+ts3 = ts0.loc['2010-12-15':'2010-12-31']
+# Reindex without fill method: ts3
+ts3 = ts2.reindex(ts1.index)
+
+# Reindex with fill method, using forward fill: ts4
+ts4 = ts2.reindex(ts1.index, method='ffill')
+
+# Combine ts1 + ts2: sum12
+sum12 = ts1+ts2
+
+# Combine ts1 + ts3: sum13
+sum13 = ts1+ts3
+
+# Combine ts1 + ts4: sum14
+sum14 = ts1+ts4
+
+# Downsample to 6 hour data and aggregate by mean: df1
+df1 = df.loc[:,'Temperature'].resample('6h').mean()
+
+# Downsample to daily data and count the number of data points: df2
+df2 = df.loc[:,'Temperature'].resample('D').count()
