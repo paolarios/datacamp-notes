@@ -411,3 +411,39 @@ df1 = df.loc[:,'Temperature'].resample('6h').mean()
 
 # Downsample to daily data and count the number of data points: df2
 df2 = df.loc[:,'Temperature'].resample('D').count()
+august = df.loc['2010-August','Temperature']
+#another way
+#Extract the August 2010 data: august
+august = df['Temperature']['2010-August']
+# Strip extra whitespace from the column names: df.columns
+df.columns = df.columns.str.strip()
+
+# Extract data for which the destination airport is Dallas: dallas
+dallas = df['Destination Airport'].str.contains('DAL')
+
+# Compute the total number of Dallas departures each day: daily_departures
+daily_departures = dallas.resample('D').sum()
+
+# Generate the summary statistics for daily Dallas departures: stats
+stats = daily_departures.describe()
+
+#Downsample to obtain only the daily highest temperatures in August: august_highs
+august_highs = august.resample('D').max()
+
+# Apply a rolling mean with a 24 hour window: smoothed moving averages
+smoothed = unsmoothed.rolling(window=24).mean()
+
+# Create a new DataFrame with columns smoothed and unsmoothed: august
+august = pd.DataFrame({'smoothed':smoothed, 'unsmoothed':unsmoothed})
+
+# Plot both smoothed and unsmoothed data using august.plot().
+august.plot()
+plt.show()
+# Reset the index of ts2 to ts1, and then use linear interpolation to fill in the NaNs: ts2_interp
+ts2_interp = ts2.reindex(ts1.index).interpolate(how='linear')
+
+# Compute the absolute difference of ts1 and ts2_interp: differences 
+differences = np.abs(ts1-ts2_interp)
+
+# Generate and print summary statistics of the differences
+print(differences.describe())
