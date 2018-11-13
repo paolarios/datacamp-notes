@@ -607,3 +607,10 @@ august_2011_high.plot(kind='hist', normed=True, cumulative=True, bins=25)
 
 # Display the plot
 plt.show()
+
+# 13/11/2018 
+#mean normal distribution 
+np.mean(pm.Normal.dist(100,20).random(size=1000))
+#shadow price 
+print("{0:.2f}".format(valuations[number_of_goods]))
+sorted([1,5,8,6,2], reverse= True)
